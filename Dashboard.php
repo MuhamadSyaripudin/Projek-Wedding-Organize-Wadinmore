@@ -216,8 +216,6 @@ $testimoni_list = [
   </div>
 </section>
 
-=======
->>>>>>> d141d8b4230ca69885ba3b13e0779ed290e48992
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
