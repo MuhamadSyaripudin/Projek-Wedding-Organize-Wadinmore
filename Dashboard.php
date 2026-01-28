@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 <?php
 // Placeholder FE sementara untuk Testimoni
+$status_booking = "Pending"; // Pending / Completed
 $testimoni_list = [
     ['nama_user' => 'Nadia & Rafi', 'pesan' => 'Wadinmore membuat hari pernikahan kami sempurna! Semua berjalan lancar dan dekorasi fantastis.'],
     ['nama_user' => 'Andi & Sinta', 'pesan' => 'Pelayanan profesional dan ramah. Catering enak, photografer handal.'],
@@ -8,8 +8,6 @@ $testimoni_list = [
 ];
 ?>
 
-=======
->>>>>>> d141d8b4230ca69885ba3b13e0779ed290e48992
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -155,7 +153,6 @@ $testimoni_list = [
   </div>
 </section>
 
-<<<<<<< HEAD
 <!-- GALLERY -->
 <section id="gallery" class="bg-light">
   <div class="container text-center">
