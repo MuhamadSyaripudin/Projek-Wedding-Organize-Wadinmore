@@ -16,7 +16,6 @@ $testimoni_list = [
 <title>Wadinmore Wedding Organizer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<<<<<<< HEAD
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,7 +30,6 @@ $testimoni_list = [
       color: white;
     }
   </style>
-=======
 <!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -231,50 +229,10 @@ body{
 }
 
 </style>
->>>>>>> 10e66fbb60fd2ceb184c69bbbedf28d634f35fff
 </head>
-
 <body>
-
-<<<<<<< HEAD
   <!-- NAVBAR -->
   <?php include 'navbar.php'; ?>
-
-  <!-- HERO SECTION -->
-  <section class="hero d-flex align-items-center text-center">
-    <div class="container">
-      <h1 class="display-4 fw-bold">Wujudkan Pernikahan Impianmu</h1>
-      <p class="lead my-4">
-        Wadinmore Wedding Organizer siap mendampingi hari bahagia Anda
-      </p>
-      <a href="Paket.php" class="btn btn-primary btn-lg">
-        Lihat Paket
-      </a>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="py-5">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <h2 class="fw-bold mb-3">Tentang Wadinmore</h2>
-          <p>
-            Wadinmore adalah sebuah Wedding Organizer (WO) yang bergerak dalam penyedia jasa pernikahan
-            profesional
-            yang berfokus pada detail, kreativitas, dan kepuasan klien.
-            Wadinmore hadir untuk membantu pasangan calon pengantin dalam merencanakan, mengatur dan
-            menjalankan seluruh rangkaian acara pernikahan agar berjalan lancar
-            dengan konsep yang elegan dan berkesan.
-          </p>
-        </div>
-        <div class="col-md-6">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552" class="img-fluid rounded"
-            alt="Wedding">
-        </div>
-=======
-<?php include 'navbar.php'; ?>
-
 <!-- HERO -->
 <section class="hero d-flex align-items-center text-center">
   <div class="container">
@@ -301,12 +259,10 @@ body{
       <div class="col-md-6">
         <img src="https://images.unsplash.com/photo-1519741497674-611481863552"
              class="img-fluid rounded" alt="Wedding">
->>>>>>> 10e66fbb60fd2ceb184c69bbbedf28d634f35fff
       </div>
     </div>
   </section>
 
-<<<<<<< HEAD
   <!-- SERVICES -->
   <section id="services" class="py-5 bg-light">
     <div class="container text-center">
@@ -380,7 +336,6 @@ body{
             </div>
           </div>
         </div>
-=======
 
 <!-- SERVICES -->
 <section id="services" class="py-5 text-center fade-section">
@@ -413,8 +368,6 @@ body{
         </div>
       </div>
       <?php endforeach; ?>
->>>>>>> 10e66fbb60fd2ceb184c69bbbedf28d634f35fff
-
       </div>
     </div>
   </section>
@@ -556,7 +509,6 @@ body{
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-=======
 
 <!-- GALLERY SLIDER -->
   <section id="gallery" class="bg-light py-5">
