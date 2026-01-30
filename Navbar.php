@@ -1,12 +1,11 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html>
 
-
 <!-- ===== GOOGLE FONT (Wedding Elegant) ===== -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- ===== BOOTSTRAP ICON ===== -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
 <!-- ===== NAVBAR STYLE ===== -->
 <style>
@@ -29,7 +28,7 @@ body {
   font-family: 'Playfair Display', serif;
   font-size: 26px;
   letter-spacing: 1px;
-  color: #b76e79 !important; /* rose gold */
+  color: #b76e79 !important;
 }
 
 /* Nav link style */
@@ -79,16 +78,23 @@ body {
   margin-left: 15px;
 }
 
-/* Logout button */
-.btn-logout {
-  border-radius: 20px;
-  padding: 5px 14px;
+/* ===== Logout icon (NEW elegant style) ===== */
+.logout-icon {
+  font-size: 20px;
+  color: #b76e79 !important;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+.logout-icon:hover {
+  transform: scale(1.25);
+  color: #9c4f5c !important;
 }
 
 /* Mobile spacing */
 @media (max-width: 991px){
   .user-badge,
-  .btn-logout{
+  .logout-icon{
     margin-top: 10px;
   }
 }
@@ -117,7 +123,6 @@ body {
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-lg-center">
 
-        <!-- TETAP SAMA (tidak diubah) -->
         <li class="nav-item">
           <a class="nav-link active" href="#">Home</a>
         </li>
@@ -147,25 +152,23 @@ body {
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" href="#">logout</a>
-        </li>
-        <li class="nav-item">
           <a class="btn btn-outline-primary ms-lg-3" href="Paket.php">
             Paket
           </a>
         </li>
 
 
-        <!-- ===== TAMBAHAN USER LOGIN (tidak ganggu alur lama) ===== -->
+        <!-- ===== LOGIN USER (TETAP SAMA LOGIC NYA) ===== -->
         <?php if(isset($_SESSION['username'])): ?>
 
           <li class="nav-item user-badge">
             👤 <?= $_SESSION['username']; ?>
           </li>
 
+          <!-- Logout icon only -->
           <li class="nav-item">
-            <a class="btn btn-danger btn-sm btn-logout ms-2" href="logout.php">
-              Logout
+            <a href="logout.php" class="nav-link logout-icon" title="Logout">
+              <i class="bi bi-box-arrow-right"></i>
             </a>
           </li>
 

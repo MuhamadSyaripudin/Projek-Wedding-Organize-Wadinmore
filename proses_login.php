@@ -2,6 +2,10 @@
 session_start();
 include 'config/database.php';
 
+$_SESSION['role'] = 'user';
+header("Location: Dashboard.php");
+
+
 // Ambil data dari form
 $username = $_POST['username'];
 $password = $_POST['password'];
