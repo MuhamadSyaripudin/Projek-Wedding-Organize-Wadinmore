@@ -28,13 +28,13 @@ if (mysqli_num_rows($query) == 1) {
     } else {
         echo "<script>
                 alert('Password salah!');
-                window.location='login_user.php';
+                window.location='Login.php';
               </script>";
     }
 } else {
     echo "<script>
             alert('Username tidak ditemukan!');
-            window.location='login_user.php';
+            window.location='Login.php';
           </script>";
 }
 ?>

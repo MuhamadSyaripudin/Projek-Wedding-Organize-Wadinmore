@@ -1,14 +1,9 @@
 <?php
 session_start();
 
-// FE version: placeholder sementara, backend nanti ganti
-$nama_user = isset($_SESSION['nama']) ? $_SESSION['nama'] : 'User';
-
-// Cek apakah user sudah login
-if(!isset($_SESSION['id_user'])){
-    // Kalau belum login → redirect ke login_user.php
-    //header("Location: Login.php");
-    //exit;
+if (!isset($_SESSION['login'])) {
+    header("Location: Login.php");
+    exit;
 }
 ?>
 
