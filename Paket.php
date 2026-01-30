@@ -116,6 +116,7 @@
           <div class="card-body text-center">
             <i class="bi bi-gem fs-1 text-secondary"></i>
             <h5 class="fw-bold mt-3">Paket 1</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Dekorasi, MC, dan Entertaiment</h6>
             <p class="price">Rp 25.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -134,6 +135,7 @@
           <div class="card-body text-center">
             <i class="bi bi-award fs-1 text-primary"></i>
             <h5 class="fw-bold mt-3">Paket 2</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Wedding Organizer, Dekorasi, MC, Entertaiment, dan Upacara Adat</h6>
             <p class="price">Rp 36.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -152,6 +154,7 @@
           <div class="card-body text-center">
             <i class="bi bi-stars fs-1 text-warning"></i>
             <h5 class="fw-bold mt-3">Paket 3</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Upacara Adat, Dekorasi, MC, Entertaiment, Siraman, Pre-Wedding, dan Wedding Organizer</h6>
             <p class="price">Rp 40.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -170,6 +173,7 @@
           <div class="card-body text-center">
             <i class="bi bi-stars fs-1 text-warning"></i>
             <h5 class="fw-bold mt-3">Paket 4</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Upacara Adat, Dekorasi, MC, Entertaiment, Siraman, Pre-Wedding, Wedding Organizer, dan Catering</h6>
             <p class="price">Rp 70.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -188,6 +192,7 @@
           <div class="card-body text-center">
             <i class="bi bi-stars fs-1 text-warning"></i>
             <h5 class="fw-bold mt-3">Paket 5</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Upacara Adat, Dekorasi, MC, Entertaiment, Siraman, Pre-Wedding, Wedding Organizer, dan Catering</h6>
             <p class="price">Rp 60.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -206,6 +211,7 @@
           <div class="card-body text-center">
             <i class="bi bi-stars fs-1 text-warning"></i>
             <h5 class="fw-bold mt-3">Paket 500</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Dekorasi, MC, venue, Catering, dan Entertaiment</h6>
             <p class="price">Rp 50.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -224,6 +230,7 @@
           <div class="card-body text-center">
             <i class="bi bi-stars fs-1 text-warning"></i>
             <h5 class="fw-bold mt-3">Paket Intimate 1</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Dekorasi, MC, Venue, dan Catering</h6>
             <p class="price">Rp 25.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -242,6 +249,7 @@
           <div class="card-body text-center">
             <i class="bi bi-stars fs-1 text-warning"></i>
             <h5 class="fw-bold mt-3">Paket Intimate 2</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Dekorasi, MC, Venue, dan Catering</h6>
             <p class="price">Rp 32.500.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
@@ -260,6 +268,7 @@
           <div class="card-body text-center">
             <i class="bi bi-buildings fs-1 text-info"></i>
             <h5 class="fw-bold mt-3">Paket Venue</h5>
+            <h6 class="fw-bold mt-2">Makeup & Attire, Photo & Videographer, Wedding Organizer, Dekorasi, MC, Venue, Catering, dan Entertaiment</h6>
             <p class="price">Rp 55.000.000</p>
             <a href="#" class="btn btn-outline-primary"
                data-bs-toggle="modal"
