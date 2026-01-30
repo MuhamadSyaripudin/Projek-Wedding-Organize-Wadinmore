@@ -1,10 +1,13 @@
 <?php
 session_start();
+include 'config/database.php';
 
 if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login_admin.php");
     exit;
 }
+$result = mysqli_query($conn, "SELECT * FROM bookings ");
+$bookings = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 <h2>Dashboard Admin</h2>
 <p>Halo Admin <?= $_SESSION['nama_admin']; ?></p>
@@ -39,9 +42,9 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'admin') {
           <?php foreach($bookings as $b): ?>
           <tr>
             <td><?= $b['nama_user'] ?></td>
-            <td><?= $b['paket'] ?></td>
-            <td><?= $b['tanggal'] ?></td>
-            <td><?= $b['venue'] ?></td>
+            <td><?= $b['nama_paket'] ?></td>
+            <td><?= $b['tanggal_acara'] ?></td>
+            <td><?= $b['alamat_acara'] ?></td>
             <td><?= $b['jumlah_tamu'] ?></td>
             <td>
               <?php if($b['status']=="Pending"): ?>

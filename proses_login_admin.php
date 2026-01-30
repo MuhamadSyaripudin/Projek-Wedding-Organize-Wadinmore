@@ -10,14 +10,14 @@ $query = mysqli_query($conn, "SELECT * FROM admin WHERE nama_admin='$nama_admin'
 if (mysqli_num_rows($query) == 1) {
     $admin = mysqli_fetch_assoc($query);
 
-    if (password_verify($password, $admin['password'])) {
+    if ($password == $admin['password']) {
 
         $_SESSION['login'] = true;
         $_SESSION['role'] = 'admin';
         $_SESSION['id_admin'] = $admin['id_admin'];
         $_SESSION['nama_admin'] = $admin['nama_admin'];
 
-        header("Location: admin/dashboard_admin.php");
+        header("Location: Dashboard_admin.php");
         exit;
 
     } else {
