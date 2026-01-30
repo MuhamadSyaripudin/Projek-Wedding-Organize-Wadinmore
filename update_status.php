@@ -7,7 +7,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-$id_booking = $_POST['id_booking'];
+$nama_user = $_POST['nama_user'];
 $status    = $_POST['status'];
 
 $query = "UPDATE bookings SET status='$status' WHERE nama_user='$nama_user'";

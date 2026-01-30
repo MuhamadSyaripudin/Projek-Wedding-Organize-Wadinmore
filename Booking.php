@@ -204,8 +204,11 @@ paketSelect.addEventListener('change', function () {
 venueName.addEventListener('change', function () {
   const selected = this.options[this.selectedIndex];
   venueCapacity.value = selected.dataset.capacity;
+
+  // 👉 update jumlah tamu juga
+  document.getElementById("jumlah_tamu_auto").value =
+    selected.dataset.capacity.replace(" orang","");
 });
 </script>
 </body>
 </html>
-
