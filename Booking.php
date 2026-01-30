@@ -30,8 +30,9 @@ if (!isset($_SESSION['login'])) {
 <div class="container mt-5">
   <h1 class="text-center mb-4">Form Booking</h1>
   <p class="text-center mb-5">
-    Halo <strong><?php echo $nama_user; ?></strong>, Silakan isi form di bawah untuk memesan paket Wadinmore Wedding Organizer.
-  </p>
+  Halo <strong><?= $_SESSION['username']; ?></strong>, 
+  Silakan isi form di bawah untuk memesan paket Wadinmore Wedding Organizer.
+</p>
 
   <div class="row justify-content-center">
     <div class="col-md-8">
