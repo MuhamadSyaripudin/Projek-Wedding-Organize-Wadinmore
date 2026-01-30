@@ -1,11 +1,14 @@
 <?php
 // FE version: placeholder sementara, backend nanti ganti
 $nama_user = "User"; // frontend placeholder
-$paket = "Gold";     // contoh data sementara
+$paket = "Gold";     
 $tanggal = "2026-03-25";
 $venue = "Ballroom A";
 $jumlah_tamu = 200;
-$status = "Confirmed"; // Pending / Confirmed / Cancelled
+
+// GANTI-GANTI buat test:
+// Pending / Confirmed / Completed / Cancelled
+$status = "Completed"; 
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -50,6 +53,8 @@ $status = "Confirmed"; // Pending / Confirmed / Cancelled
                       echo '<span class="badge bg-warning text-dark">Pending</span>';
                     } elseif($status == "Confirmed"){
                       echo '<span class="badge bg-success">Confirmed</span>';
+                    } elseif($status == "Completed"){
+                      echo '<span class="badge bg-primary">Completed</span>';
                     } else {
                       echo '<span class="badge bg-danger">Cancelled</span>';
                     }
@@ -63,13 +68,21 @@ $status = "Confirmed"; // Pending / Confirmed / Cancelled
             <em>*Status akan diperbarui otomatis oleh sistem setelah admin konfirmasi*</em>
           </p>
 
-          <!-- Tombol lanjut ke pembayaran jika status Confirmed -->
           <div class="text-center mt-4">
             <?php if($status == "Confirmed"): ?>
               <a href="Pembayaran.php" class="btn btn-success">Lanjut ke Pembayaran</a>
+
+            <?php elseif($status == "Completed"): ?>
+              <a href="testimoni.php" class="btn btn-primary">Isi Testimoni</a>
+
+            <?php else: ?>
+              <p class="text-muted">Belum ada aksi lanjutan.</p>
             <?php endif; ?>
+
+            <br>
             <a href="Booking.php" class="btn btn-secondary mt-2">Kembali ke Booking</a>
           </div>
+
         </div>
       </div>
     </div>
