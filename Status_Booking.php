@@ -1,14 +1,22 @@
 <?php
-// FE version: placeholder sementara, backend nanti ganti
-$nama_user = "User"; // frontend placeholder
-$paket = "Gold";     
-$tanggal = "2026-03-25";
-$venue = "Ballroom A";
-$jumlah_tamu = 200;
+session_start();
+include 'config/database.php';
 
-// GANTI-GANTI buat test:
-// Pending / Confirmed / Completed / Cancelled
-$status = "Completed"; 
+// Proteksi halaman
+if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
+    header("Location: login_user.php");
+    exit;
+}
+
+$id_user   = $_SESSION['user_id'];
+$nama_user = $_SESSION['nama_lengkap'];
+
+// Ambil data booking user
+$query = mysqli_query($conn, "
+    SELECT * FROM bookings 
+    WHERE id_user = '$id_user'
+    ORDER BY created_at DESC
+");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -23,64 +31,78 @@ $status = "Completed";
 </head>
 <body>
 
+<?php include 'navbar.php'; ?>
+
 <div class="container mt-5">
   <h1 class="text-center mb-4">Status Booking Anda</h1>
-  <p class="text-center mb-5">Halo <strong><?php echo $nama_user; ?></strong>, berikut status booking pernikahan Anda:</p>
+  <p class="text-center mb-5">
+    Halo <strong><?= $nama_user; ?></strong>, berikut status booking pernikahan Anda:
+  </p>
 
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div class="card shadow-sm">
         <div class="card-body">
+
+          <?php if (mysqli_num_rows($query) > 0): ?>
           <table class="table table-bordered table-striped">
             <thead class="table-light">
               <tr>
                 <th>Paket</th>
                 <th>Tanggal</th>
-                <th>Venue / Alamat</th>
+                <th>Alamat Acara</th>
                 <th>Jumlah Tamu</th>
                 <th>Status</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
+
+              <?php while ($data = mysqli_fetch_assoc($query)): ?>
               <tr>
-                <td><?php echo $paket; ?></td>
-                <td><?php echo $tanggal; ?></td>
-                <td><?php echo $venue; ?></td>
-                <td><?php echo $jumlah_tamu; ?></td>
+                <td><?= $data['nama_paket']; ?></td>
+                <td><?= date('d-m-Y', strtotime($data['tanggal_acara'])); ?></td>
+                <td><?= $data['alamat_acara'] ?: '-'; ?></td>
+                <td><?= $data['jumlah_tamu'] ?: '-'; ?></td>
                 <td>
                   <?php
-                    if($status == "Pending"){
+                  if ($data['status'] == 'pending') {
                       echo '<span class="badge bg-warning text-dark">Pending</span>';
-                    } elseif($status == "Confirmed"){
-                      echo '<span class="badge bg-success">Confirmed</span>';
-                    } elseif($status == "Completed"){
-                      echo '<span class="badge bg-primary">Completed</span>';
-                    } else {
-                      echo '<span class="badge bg-danger">Cancelled</span>';
-                    }
+                  } elseif ($data['status'] == 'diproses') {
+                      echo '<span class="badge bg-info">Diproses</span>';
+                  } elseif ($data['status'] == 'diterima') {
+                      echo '<span class="badge bg-success">Diterima</span>';
+                  } else {
+                      echo '<span class="badge bg-danger">Ditolak</span>';
+                  }
                   ?>
                 </td>
+                <td>
+                  <?php if ($data['status'] == 'diterima'): ?>
+                    <a href="Pembayaran.php?id=<?= $data['id_booking']; ?>" class="btn btn-sm btn-success">
+                      Pembayaran
+                    </a>
+                  <?php elseif ($data['status'] == 'ditolak'): ?>
+                    <span class="text-muted">Tidak ada aksi</span>
+                  <?php else: ?>
+                    <span class="text-muted">Menunggu</span>
+                  <?php endif; ?>
+                </td>
               </tr>
+              <?php endwhile; ?>
+
             </tbody>
           </table>
+          <?php else: ?>
+            <p class="text-center text-muted">Belum ada booking yang dibuat.</p>
+          <?php endif; ?>
 
           <p class="text-center mt-3">
-            <em>*Status akan diperbarui otomatis oleh sistem setelah admin konfirmasi*</em>
+            <em>*Status booking akan diperbarui oleh admin*</em>
           </p>
 
           <div class="text-center mt-4">
-            <?php if($status == "Confirmed"): ?>
-              <a href="Pembayaran.php" class="btn btn-success">Lanjut ke Pembayaran</a>
-
-            <?php elseif($status == "Completed"): ?>
-              <a href="testimoni.php" class="btn btn-primary">Isi Testimoni</a>
-
-            <?php else: ?>
-              <p class="text-muted">Belum ada aksi lanjutan.</p>
-            <?php endif; ?>
-
-            <br>
-            <a href="Booking.php" class="btn btn-secondary mt-2">Kembali ke Booking</a>
+            <a href="Booking.php" class="btn btn-secondary">Kembali ke Booking</a>
           </div>
 
         </div>
