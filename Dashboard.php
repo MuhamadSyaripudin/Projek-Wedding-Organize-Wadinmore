@@ -20,6 +20,8 @@ $testimoni_list = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -51,6 +53,41 @@ $testimoni_list = [
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
         }
+
+                /* CONTACT STYLE */
+        .contact-section {
+          background: linear-gradient(135deg, #fff7f9, #fdf0f5);
+        }
+
+        .contact-card {
+          background: white;
+          padding: 30px 20px;
+          border-radius: 20px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+          transition: 0.3s;
+        }
+
+        .contact-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .contact-icon {
+          font-size: 35px;
+          color: #d63384; /* pink wedding tone */
+          margin-bottom: 12px;
+        }
+
+        .contact-card h6 {
+          font-weight: 600;
+          margin-bottom: 6px;
+        }
+
+        .section-title {
+          font-weight: 700;
+          letter-spacing: 1px;
+        }
+
 
         /* ===== Wedding Color Palette ===== */
         :root {
@@ -515,12 +552,46 @@ $testimoni_list = [
                             </section>
 
 
-                            <!-- CONTACT -->
-                            <section id="contact" class="py-5 text-center">
-                                <h2 class="section-title">Contact</h2>
-                                <p>Email: wadinmore@gmail.com</p>
-                                <p>Telp: 08xxxxxxxxxx</p>
-                            </section>
+                           <!-- CONTACT -->
+          <section id="contact" class="contact-section py-5">
+            <div class="container text-center">
+
+              <h2 class="section-title mb-4">Contact Us</h2>
+              <p class="text-muted mb-5">Hubungi kami untuk konsultasi dan booking paket terbaik Anda ✨</p>
+
+              <div class="row justify-content-center g-4">
+
+                <!-- Email -->
+                <div class="col-md-3">
+                  <div class="contact-card">
+                    <i class="bi bi-envelope-fill contact-icon"></i>
+                    <h6>Email</h6>
+                    <p>wadinmore@gmail.com</p>
+                  </div>
+                </div>
+
+                <!-- Instagram -->
+                <div class="col-md-3">
+                  <div class="contact-card">
+                    <i class="bi bi-instagram contact-icon"></i>
+                    <h6>Instagram</h6>
+                    <p>@wadinmore</p>
+                  </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="col-md-3">
+                  <div class="contact-card">
+                    <i class="bi bi-telephone-fill contact-icon"></i>
+                    <h6>WhatsApp</h6>
+                    <p>08xxxxxxxxxx</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
 
 
                             <!-- Scroll Fade Script -->
