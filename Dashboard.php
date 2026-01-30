@@ -216,10 +216,10 @@ body{
 
 </style>
 </head>
-
 <body>
 
-<?php include 'navbar.php'; ?>
+  <!-- NAVBAR -->
+  <?php include 'navbar.php'; ?>
 
 <!-- HERO -->
 <section class="hero d-flex align-items-center text-center">
