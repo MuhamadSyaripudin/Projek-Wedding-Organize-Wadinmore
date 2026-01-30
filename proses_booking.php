@@ -11,13 +11,16 @@ if (!isset($_SESSION['login'])) {
 // Ambil data dari form (SESUAI FORM)
 $nama_user     = $_POST['nama_user'];
 $nama_paket    = $_POST['nama_paket'];
-$alamat_acara  = $_POST['alamat_acara'];
-$jumlah_tamu   = $_POST['jumlah_tamu'];
+$venue_name    = $_POST['venue'] ?? null;
+$alamat_manual = $_POST['alamat_acara'] ?? '';
+$jumlah_tamu = $_POST['jumlah_tamu_auto'] ?? $_POST['jumlah_tamu'] ?? 0;
 $tanggal_acara = $_POST['tanggal_acara'];
 $catatan       = $_POST['catatan'];
 
 // Ambil user ID dari session
 $id_user = $_SESSION['user_id'];
+
+$alamat_acara = !empty($venue_name) ? $venue_name : $alamat_manual;
 
 // Status default
 $status = 'pending';
