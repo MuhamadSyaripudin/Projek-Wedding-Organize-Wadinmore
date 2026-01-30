@@ -73,7 +73,7 @@ $nama_user = $_SESSION['nama_lengkap'];
             <div id="venue-info" class="d-none;">
               <div class="mb-3">
                 <label class="form-label">Venue</label>
-                <select id="venue-name" class="form-select"></select>
+                <select id="venue-name" name="venue" class="form-select"></select>
               </div>
               <div class="mb-3">
                 <label class="form-label">Kapasitas Maksimal</label>
@@ -92,6 +92,8 @@ $nama_user = $_SESSION['nama_lengkap'];
                 <input type="number" name="jumlah_tamu" class="form-control">
               </div>
             </div>
+
+            <input type="hidden" name="jumlah_tamu_auto" id="jumlah_tamu_auto">
 
             <div class="mb-3">
               <label class="form-label">Tanggal Pernikahan</label>
@@ -178,7 +180,12 @@ paketSelect.addEventListener('change', function () {
       venueName.appendChild(option);
     });
 
+    venueName.selectedIndex = 0; // paksa pilih venue pertama
     venueCapacity.value = venueData[paket][0].capacity;
+
+    // 👉 SET JUMLAH TAMU OTOMATIS
+    document.getElementById("jumlah_tamu_auto").value =
+      venueData[paket][0].capacity.replace(" orang","");
 
   } else {
 

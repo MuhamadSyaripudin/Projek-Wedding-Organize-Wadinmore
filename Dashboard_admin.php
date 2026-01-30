@@ -59,7 +59,7 @@ $bookings = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </td>
             <td>
               <form action="update_status.php" method="post" class="d-flex gap-1">
-                <input type="hidden" name="nama_user" value="<?= $b['nama_user'] ?>">
+                <input type="hidden" name="id_booking" value="<?= $b['id_booking'] ?>">
                 <select name="status" class="form-select form-select-sm" required>
                   <option value="">Ubah</option>
                   <option value="Pending">Pending</option>
@@ -77,6 +77,12 @@ $bookings = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </div>
   </div>
 </div>
-
 </body>
+
+<?php if(isset($_GET['success'])): ?>
+<script>
+  alert("Status berhasil diubah!");
+</script>
+<?php endif; ?>
+
 </html>
