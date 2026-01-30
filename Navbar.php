@@ -35,6 +35,9 @@
           <a class="nav-link" href="#contact">Contact</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link active" href="#">logout</a>
+        </li>
+        <li class="nav-item">
           <a class="btn btn-outline-primary ms-lg-3" href="Paket.php">
             Paket
           </a>
