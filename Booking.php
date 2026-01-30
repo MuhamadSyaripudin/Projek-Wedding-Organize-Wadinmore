@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$nama_user = isset($_SESSION['username']);
+
 if (!isset($_SESSION['login'])) {
     header("Location: Login.php");
     exit;
@@ -42,17 +44,23 @@ if (!isset($_SESSION['login'])) {
               <label class="form-label">Paket</label>
               <select name="paket" id="paket" class="form-select" required>
                 <option value="">-- Pilih Paket --</option>
-                <option value="Silver">Silver (tanpa venue)</option>
-                <option value="Gold">Gold (termasuk venue)</option>
-                <option value="Platinum">Platinum (termasuk venue)</option>
+                <option value="Paket1">Paket 1</option>
+                <option value="Paket2">Paket 2</option>
+                <option value="Paket3">Paket 3</option>
+                <option value="Paket4">Paket 4</option>
+                <option value="Paket5">Paket 5</option>
+                <option value="Paket500">Paket 500</option>
+                <option value="PaketIntimate1">Paket Intimate 1</option>
+                <option value="PaketIntimate2">Paket Intimate 2</option>
+                <option value="PaketVenue">Paket Venue</option>
               </select>
             </div>
 
             <!-- Venue & kapasitas (hanya untuk paket include venue) -->
-            <div id="venue-info" style="display:none;">
+            <div id="venue-info" class="d-none;">
               <div class="mb-3">
                 <label class="form-label">Venue</label>
-                <input type="text" id="venue-name" class="form-control" readonly>
+                <select id="venue-name" class="form-select"></select>
               </div>
               <div class="mb-3">
                 <label class="form-label">Kapasitas Maksimal</label>
@@ -104,32 +112,79 @@ if (!isset($_SESSION['login'])) {
 
 <!-- JS untuk toggle venue / alamat -->
 <script>
-  const paketSelect = document.getElementById('paket');
-  const venueInfo = document.getElementById('venue-info');
-  const alamatAcara = document.getElementById('alamat-acara');
-  const venueName = document.getElementById('venue-name');
-  const venueCapacity = document.getElementById('venue-capacity');
+const paketSelect   = document.getElementById('paket');
+const venueInfo     = document.getElementById('venue-info');
+const alamatAcara   = document.getElementById('alamat-acara');
+const venueName     = document.getElementById('venue-name');
+const venueCapacity = document.getElementById('venue-capacity');
 
-  paketSelect.addEventListener('change', function() {
-    const paket = this.value;
+/* =========================
+   DATA VENUE PER PAKET
+========================= */
+const venueData = {
+  "Paket500": [
+    { name: "Desofia Hotel Dago", capacity: "300 orang" }
+  ],
 
-    if(paket === 'Gold') {
-      venueInfo.style.display = 'block';
-      alamatAcara.style.display = 'none';
-      venueName.value = 'Ballroom A';
-      venueCapacity.value = '200 orang';
-    } else if(paket === 'Platinum') {
-      venueInfo.style.display = 'block';
-      alamatAcara.style.display = 'none';
-      venueName.value = 'Grand Ballroom';
-      venueCapacity.value = '400 orang';
-    } else {
-      venueInfo.style.display = 'none';
-      alamatAcara.style.display = 'block';
-      venueName.value = '';
-      venueCapacity.value = '';
-    }
-  });
+  "PaketIntimate1": [
+    { name: "Mang Kabayan Resto", capacity: "200 orang" },
+    { name: "Desofia Hotel Dago", capacity: "300 orang" }
+  ],
+
+  "PaketIntimate2": [
+    { name: "Mang Kabayan Resto", capacity: "200 orang" },
+    { name: "Desofia Hotel Dago", capacity: "300 orang" }
+  ],
+
+  "PaketVenue": [
+    { name: "Cibabat Park", capacity: "200 orang" },
+    { name: "Kiara Beat n Better", capacity: "300 orang" },
+    { name: "Paku Haji", capacity: "300 orang" }
+  ]
+};
+
+
+/* =========================
+   CHANGE PAKET
+========================= */
+paketSelect.addEventListener('change', function () {
+  const paket = this.value;
+
+  if (venueData[paket]) {
+
+    venueInfo.classList.remove('d-none');
+    alamatAcara.classList.add('d-none');
+
+    venueName.innerHTML = "";
+
+    venueData[paket].forEach((v, i) => {
+      const option = document.createElement('option');
+      option.value = v.name;
+      option.textContent = v.name;
+      option.dataset.capacity = v.capacity;
+      venueName.appendChild(option);
+    });
+
+    venueCapacity.value = venueData[paket][0].capacity;
+
+  } else {
+
+    venueInfo.classList.add('d-none');
+    alamatAcara.classList.remove('d-none');
+
+    venueName.innerHTML = "";
+    venueCapacity.value = "";
+  }
+});
+
+
+/* =========================
+   CHANGE VENUE
+========================= */
+venueName.addEventListener('change', function () {
+  const selected = this.options[this.selectedIndex];
+  venueCapacity.value = selected.dataset.capacity;
+});
 </script>
 </body>
 </html>
