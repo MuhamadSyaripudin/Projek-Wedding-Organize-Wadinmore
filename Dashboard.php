@@ -1,4 +1,14 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header("Location: login_user.php");
+    exit;
+}
+?>
+
+
+<?php
 // Placeholder FE sementara untuk Testimoni
 $status_booking = "Pending"; // Pending / Completed
 $testimoni_list = [
