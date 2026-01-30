@@ -24,7 +24,7 @@
           <h2 class="text-center mb-4">Login User</h2>
           <p class="text-center mb-4">Masuk untuk melakukan booking paket Wadinmore</p>
 
-          <form action="proses_register.php" method="post">
+          <form action="proses_login.php" method="post">
             <div class="mb-3">
               <label class="form-label">Username</label>
               <input type="text" name="username" class="form-control" required>
@@ -40,7 +40,7 @@
             </div>
 
             <p class="text-center mt-3">
-              Belum punya akun? <a href="login_user.php">Daftar di sini</a>
+              Belum punya akun? <a href="register.php">Daftar di sini</a>
             </p>
 
           </form>
