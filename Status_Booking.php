@@ -2,7 +2,7 @@
 session_start();
 include 'config/database.php';
 
-// Proteksi halaman
+// Proteksi halaman (khusus user)
 if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
     header("Location: login_user.php");
     exit;
@@ -40,13 +40,13 @@ $query = mysqli_query($conn, "
   </p>
 
   <div class="row justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-11">
       <div class="card shadow-sm">
         <div class="card-body">
 
           <?php if (mysqli_num_rows($query) > 0): ?>
-          <table class="table table-bordered table-striped">
-            <thead class="table-light">
+          <table class="table table-bordered table-striped align-middle text-center">
+            <thead class="table-dark">
               <tr>
                 <th>Paket</th>
                 <th>Tanggal</th>
@@ -60,32 +60,42 @@ $query = mysqli_query($conn, "
 
               <?php while ($data = mysqli_fetch_assoc($query)): ?>
               <tr>
-                <td><?= $data['nama_paket']; ?></td>
+                <td><?= htmlspecialchars($data['nama_paket']); ?></td>
                 <td><?= date('d-m-Y', strtotime($data['tanggal_acara'])); ?></td>
                 <td><?= $data['alamat_acara'] ?: '-'; ?></td>
                 <td><?= $data['jumlah_tamu'] ?: '-'; ?></td>
+
+                <!-- STATUS -->
                 <td>
                   <?php
-                  if ($data['status'] == 'pending') {
+                  if ($data['status'] === 'Pending') {
                       echo '<span class="badge bg-warning text-dark">Pending</span>';
-                  } elseif ($data['status'] == 'diproses') {
-                      echo '<span class="badge bg-info">Diproses</span>';
-                  } elseif ($data['status'] == 'diterima') {
-                      echo '<span class="badge bg-success">Diterima</span>';
-                  } else {
-                      echo '<span class="badge bg-danger">Ditolak</span>';
+                  } elseif ($data['status'] === 'Confirmed') {
+                      echo '<span class="badge bg-success">Confirmed</span>';
+                  } elseif ($data['status'] === 'Completed') {
+                      echo '<span class="badge bg-primary">Completed</span>';
+                  } elseif ($data['status'] === 'Cancelled') {
+                      echo '<span class="badge bg-danger">Cancelled</span>';
                   }
                   ?>
                 </td>
+
+                <!-- AKSI -->
                 <td>
-                  <?php if ($data['status'] == 'diterima'): ?>
-                    <a href="Pembayaran.php?id=<?= $data['id_booking']; ?>" class="btn btn-sm btn-success">
-                      Pembayaran
+                  <?php if ($data['status'] === 'Confirmed'): ?>
+                    <a href="Pembayaran.php?id=<?= $data['id_booking']; ?>" 
+                       class="btn btn-sm btn-success">
+                      💳 Pembayaran
                     </a>
-                  <?php elseif ($data['status'] == 'ditolak'): ?>
+
+                  <?php elseif ($data['status'] === 'Cancelled'): ?>
                     <span class="text-muted">Tidak ada aksi</span>
+
+                  <?php elseif ($data['status'] === 'Completed'): ?>
+                    <span class="text-muted">Selesai</span>
+
                   <?php else: ?>
-                    <span class="text-muted">Menunggu</span>
+                    <span class="text-muted">Menunggu konfirmasi</span>
                   <?php endif; ?>
                 </td>
               </tr>

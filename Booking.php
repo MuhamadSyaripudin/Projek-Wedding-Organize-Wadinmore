@@ -16,11 +16,10 @@ $nama_user = $_SESSION['nama_lengkap'];
   <title>Booking - Wadinmore Wedding Organizer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-    body { padding-top: 70px; } /* buat navbar fixed */
+    body { padding-top: 70px; }
   </style>
 </head>
 <body>
@@ -29,9 +28,9 @@ $nama_user = $_SESSION['nama_lengkap'];
 
 <div class="container mt-5">
   <h1 class="text-center mb-4">Form Booking</h1>
-  <p class="text-muted">
-      Halo <strong><?= htmlspecialchars($nama_user); ?></strong>,  
-      silakan isi form booking di bawah ini.
+  <p class="text-center">
+    Halo <strong><?= htmlspecialchars($nama_user); ?></strong>,
+    silakan isi form booking di bawah ini.
   </p>
 
   <div class="row justify-content-center">
@@ -41,17 +40,11 @@ $nama_user = $_SESSION['nama_lengkap'];
 
           <form action="proses_booking.php" method="post">
 
-            <!-- NAMA USER -->
-              <div class="mb-3">
-                <label class="form-label fw-semibold">Nama Lengkap</label>
-                <input 
-                  type="text" 
-                  name="nama_user" 
-                  class="form-control" 
-                  value="<?= htmlspecialchars($nama_user); ?>" 
-                  readonly
-                >
-              </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Nama Lengkap</label>
+              <input type="text" class="form-control"
+                     value="<?= htmlspecialchars($nama_user); ?>" readonly>
+            </div>
 
             <div class="mb-3">
               <label class="form-label">Paket</label>
@@ -69,24 +62,26 @@ $nama_user = $_SESSION['nama_lengkap'];
               </select>
             </div>
 
-            <!-- Venue & kapasitas (hanya untuk paket include venue) -->
-            <div id="venue-info" class="d-none;">
+            <!-- VENUE -->
+            <div id="venue-info" class="d-none">
               <div class="mb-3">
                 <label class="form-label">Venue</label>
                 <select id="venue-name" name="venue" class="form-select"></select>
               </div>
+
               <div class="mb-3">
                 <label class="form-label">Kapasitas Maksimal</label>
                 <input type="text" id="venue-capacity" class="form-control" readonly>
               </div>
             </div>
 
-            <!-- Alamat acara (hanya untuk paket tanpa venue) -->
+            <!-- ALAMAT -->
             <div id="alamat-acara">
               <div class="mb-3">
                 <label class="form-label">Alamat Acara</label>
                 <input type="text" name="alamat_acara" class="form-control">
               </div>
+
               <div class="mb-3">
                 <label class="form-label">Perkiraan Jumlah Tamu</label>
                 <input type="number" name="jumlah_tamu" class="form-control">
@@ -105,16 +100,14 @@ $nama_user = $_SESSION['nama_lengkap'];
               <textarea name="catatan" class="form-control" rows="3"></textarea>
             </div>
 
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary">Kirim Booking</button>
-            </div>
-
+            <button type="submit" class="btn btn-primary w-100">
+              Kirim Booking
+            </button>
           </form>
 
-          <!-- Tombol Lihat Status Booking -->
-          <div class="d-grid mt-3">
-            <a href="Status_Booking.php" class="btn btn-success">Lihat Status Booking</a>
-          </div>
+          <a href="Status_Booking.php" class="btn btn-success w-100 mt-3">
+            Lihat Status Booking
+          </a>
 
         </div>
       </div>
@@ -122,93 +115,73 @@ $nama_user = $_SESSION['nama_lengkap'];
   </div>
 </div>
 
-<!-- JS Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JS untuk toggle venue / alamat -->
 <script>
 const paketSelect   = document.getElementById('paket');
 const venueInfo     = document.getElementById('venue-info');
 const alamatAcara   = document.getElementById('alamat-acara');
 const venueName     = document.getElementById('venue-name');
 const venueCapacity = document.getElementById('venue-capacity');
+const jumlahAuto    = document.getElementById('jumlah_tamu_auto');
 
-/* =========================
-   DATA VENUE PER PAKET
-========================= */
 const venueData = {
-  "Paket500": [
-    { name: "Desofia Hotel Dago", capacity: "300 orang" }
+  Paket500: [
+    { name: "Desofia Hotel Dago", capacity: 300 }
   ],
-
-  "PaketIntimate1": [
-    { name: "Mang Kabayan Resto", capacity: "200 orang" },
-    { name: "Desofia Hotel Dago", capacity: "300 orang" }
+  PaketIntimate1: [
+    { name: "Mang Kabayan Resto", capacity: 200 },
+    { name: "Desofia Hotel Dago", capacity: 300 }
   ],
-
-  "PaketIntimate2": [
-    { name: "Mang Kabayan Resto", capacity: "200 orang" },
-    { name: "Desofia Hotel Dago", capacity: "300 orang" }
+  PaketIntimate2: [
+    { name: "Mang Kabayan Resto", capacity: 200 },
+    { name: "Desofia Hotel Dago", capacity: 300 }
   ],
-
-  "PaketVenue": [
-    { name: "Cibabat Park", capacity: "200 orang" },
-    { name: "Kiara Beat n Better", capacity: "300 orang" },
-    { name: "Paku Haji", capacity: "300 orang" }
+  PaketVenue: [
+    { name: "Cibabat Park", capacity: 200 },
+    { name: "Kiara Beat n Better", capacity: 300 },
+    { name: "Paku Haji", capacity: 300 }
   ]
 };
 
-
-/* =========================
-   CHANGE PAKET
-========================= */
 paketSelect.addEventListener('change', function () {
   const paket = this.value;
 
+  venueInfo.classList.add('d-none');
+  alamatAcara.classList.remove('d-none');
+  jumlahAuto.value = "";
+
   if (venueData[paket]) {
-
     venueInfo.classList.remove('d-none');
-    alamatAcara.classList.add('d-none');
-
     venueName.innerHTML = "";
 
-    venueData[paket].forEach((v, i) => {
-      const option = document.createElement('option');
-      option.value = v.name;
-      option.textContent = v.name;
-      option.dataset.capacity = v.capacity;
-      venueName.appendChild(option);
+    venueData[paket].forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = `${v.name} (${v.capacity} orang)`;
+      opt.dataset.capacity = v.capacity;
+      venueName.appendChild(opt);
     });
 
-    venueName.selectedIndex = 0; // paksa pilih venue pertama
-    venueCapacity.value = venueData[paket][0].capacity;
+    venueCapacity.value = venueData[paket][0].capacity + " orang";
 
-    // 👉 SET JUMLAH TAMU OTOMATIS
-    document.getElementById("jumlah_tamu_auto").value =
-      venueData[paket][0].capacity.replace(" orang","");
-
-  } else {
-
-    venueInfo.classList.add('d-none');
-    alamatAcara.classList.remove('d-none');
-
-    venueName.innerHTML = "";
-    venueCapacity.value = "";
+    // HANYA paket full venue
+    if (paket === "Paket500" || paket === "PaketVenue") {
+      alamatAcara.classList.add('d-none');
+      jumlahAuto.value = venueData[paket][0].capacity;
+    }
   }
 });
 
-
-/* =========================
-   CHANGE VENUE
-========================= */
 venueName.addEventListener('change', function () {
-  const selected = this.options[this.selectedIndex];
-  venueCapacity.value = selected.dataset.capacity;
+  const cap = this.options[this.selectedIndex].dataset.capacity;
+  venueCapacity.value = cap + " orang";
 
-  // 👉 update jumlah tamu juga
-  document.getElementById("jumlah_tamu_auto").value =
-    selected.dataset.capacity.replace(" orang","");
+  if (paketSelect.value === "Paket500" || paketSelect.value === "PaketVenue") {
+    jumlahAuto.value = cap;
+  }
 });
 </script>
+
 </body>
 </html>

@@ -2,30 +2,29 @@
 session_start();
 include 'config/database.php';
 
-// Proteksi
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
     header("Location: Login.php");
     exit;
 }
 
-// Ambil data dari form (SESUAI FORM)
-$nama_user     = $_POST['nama_user'];
+$id_user       = $_SESSION['user_id'];
+$nama_user     = $_SESSION['nama_lengkap'];
 $nama_paket    = $_POST['nama_paket'];
-$venue_name    = $_POST['venue'] ?? null;
-$alamat_manual = $_POST['alamat_acara'] ?? '';
-$jumlah_tamu = $_POST['jumlah_tamu_auto'] ?? $_POST['jumlah_tamu'] ?? 0;
+$alamat_acara  = $_POST['alamat_acara'] ?? null;
 $tanggal_acara = $_POST['tanggal_acara'];
-$catatan       = $_POST['catatan'];
+$catatan       = $_POST['catatan'] ?? null;
 
-// Ambil user ID dari session
-$id_user = $_SESSION['user_id'];
+/* ===============================
+   FIX JUMLAH TAMU
+================================ */
+if (!empty($_POST['jumlah_tamu_auto'])) {
+    $jumlah_tamu = $_POST['jumlah_tamu_auto']; // dari venue
+} else {
+    $jumlah_tamu = $_POST['jumlah_tamu']; // manual
+}
 
-$alamat_acara = !empty($venue_name) ? $venue_name : $alamat_manual;
+$status = 'Pending';
 
-// Status default
-$status = 'pending';
-
-// Query simpan booking
 $query = mysqli_query($conn, "
     INSERT INTO bookings (
         id_user,
@@ -35,7 +34,8 @@ $query = mysqli_query($conn, "
         jumlah_tamu,
         tanggal_acara,
         catatan,
-        status
+        status,
+        created_at
     ) VALUES (
         '$id_user',
         '$nama_user',
@@ -44,16 +44,14 @@ $query = mysqli_query($conn, "
         '$jumlah_tamu',
         '$tanggal_acara',
         '$catatan',
-        '$status'
+        '$status',
+        NOW()
     )
 ");
 
-// Cek hasil
 if ($query) {
-    echo "<script>
-        alert('Booking berhasil dikirim!');
-        window.location='Status_Booking.php';
-    </script>";
+    header("Location: Status_Booking.php");
+    exit;
 } else {
-    echo "Gagal menyimpan booking: " . mysqli_error($conn);
+    echo "Error: " . mysqli_error($conn);
 }

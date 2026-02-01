@@ -7,22 +7,28 @@ $password   = $_POST['password'];
 
 $query = mysqli_query($conn, "SELECT * FROM admin WHERE nama_admin='$nama_admin'");
 
-if (mysqli_num_rows($query) == 1) {
+if (mysqli_num_rows($query) === 1) {
     $admin = mysqli_fetch_assoc($query);
 
-    if ($password == $admin['password']) {
+    if (password_verify($password, $admin['password'])) {
 
-        $_SESSION['login'] = true;
-        $_SESSION['role'] = 'admin';
-        $_SESSION['id_admin'] = $admin['id_admin'];
-        $_SESSION['nama_admin'] = $admin['nama_admin'];
+        $_SESSION['login_admin'] = true;
+        $_SESSION['admin_id']    = $admin['id_user'];
+        $_SESSION['nama_admin']  = $admin['nama_admin'];
+        $_SESSION['role']        = 'admin';
 
         header("Location: Dashboard_admin.php");
         exit;
 
     } else {
-        echo "<script>alert('Password admin salah');history.back();</script>";
+        $_SESSION['error'] = "Password admin salah!";
+        header("Location: login_admin.php");
+        exit;
     }
+
 } else {
-    echo "<script>alert('Admin tidak ditemukan');history.back();</script>";
+    $_SESSION['error'] = "Nama admin tidak ditemukan!";
+    header("Location: login_admin.php");
+    exit;
 }
+?>
