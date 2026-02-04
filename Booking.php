@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
     header("Location: Login.php");
     exit;
 }
@@ -27,6 +27,20 @@ $nama_user = $_SESSION['nama_lengkap'];
 <?php include 'navbar.php'; ?>
 
 <div class="container mt-5">
+
+  <!-- 🔔 PESAN ERROR / SUCCESS -->
+  <?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger text-center">
+      <?= $_SESSION['error']; ?>
+    </div>
+  <?php unset($_SESSION['error']); endif; ?>
+
+  <?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success text-center">
+      <?= $_SESSION['success']; ?>
+    </div>
+  <?php unset($_SESSION['success']); endif; ?>
+
   <h1 class="text-center mb-4">Form Booking</h1>
   <p class="text-center">
     Halo <strong><?= htmlspecialchars($nama_user); ?></strong>,
@@ -40,12 +54,14 @@ $nama_user = $_SESSION['nama_lengkap'];
 
           <form action="proses_booking.php" method="post">
 
+            <!-- NAMA -->
             <div class="mb-3">
               <label class="form-label fw-semibold">Nama Lengkap</label>
               <input type="text" class="form-control"
                      value="<?= htmlspecialchars($nama_user); ?>" readonly>
             </div>
 
+            <!-- PAKET -->
             <div class="mb-3">
               <label class="form-label">Paket</label>
               <select name="nama_paket" id="paket" class="form-select" required>
@@ -70,12 +86,12 @@ $nama_user = $_SESSION['nama_lengkap'];
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Kapasitas Maksimal</label>
+                <label class="form-label">Kapasitas Venue</label>
                 <input type="text" id="venue-capacity" class="form-control" readonly>
               </div>
             </div>
 
-            <!-- ALAMAT -->
+            <!-- ALAMAT & JUMLAH TAMU MANUAL -->
             <div id="alamat-acara">
               <div class="mb-3">
                 <label class="form-label">Alamat Acara</label>
@@ -88,13 +104,16 @@ $nama_user = $_SESSION['nama_lengkap'];
               </div>
             </div>
 
+            <!-- JUMLAH TAMU OTOMATIS -->
             <input type="hidden" name="jumlah_tamu_auto" id="jumlah_tamu_auto">
 
+            <!-- TANGGAL -->
             <div class="mb-3">
               <label class="form-label">Tanggal Pernikahan</label>
               <input type="date" name="tanggal_acara" class="form-control" required>
             </div>
 
+            <!-- CATATAN -->
             <div class="mb-3">
               <label class="form-label">Catatan Tambahan</label>
               <textarea name="catatan" class="form-control" rows="3"></textarea>
@@ -165,7 +184,7 @@ paketSelect.addEventListener('change', function () {
 
     venueCapacity.value = venueData[paket][0].capacity + " orang";
 
-    // HANYA paket full venue
+    // FULL VENUE → alamat & input tamu disembunyikan
     if (paket === "Paket500" || paket === "PaketVenue") {
       alamatAcara.classList.add('d-none');
       jumlahAuto.value = venueData[paket][0].capacity;

@@ -3,7 +3,7 @@ session_start();
 include 'config/database.php';
 
 if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
-    header("Location: login_user.php");
+    header("Location: login.php");
     exit;
 }
 
@@ -60,6 +60,13 @@ $dp_min        = 1000000;
 
   <div class="card shadow-sm">
     <div class="card-body">
+      <div class="alert alert-info mb-4">
+        <h5 class="mb-2">Informasi Rekening Pembayaran</h5>
+        <p class="mb-1"><strong>Bank:</strong> BNI</p>
+        <p class="mb-1"><strong>No. Rekening:</strong> 1616921006</p>
+        <p class="mb-0"><strong>Atas Nama:</strong> Muhamad Syaripudin</p>
+      </div>
+
 
       <ul class="list-group mb-4">
         <li class="list-group-item"><strong>Nama:</strong> <?= htmlspecialchars($nama_user) ?></li>

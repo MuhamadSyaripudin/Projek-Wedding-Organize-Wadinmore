@@ -120,8 +120,6 @@ h2{
 
 <body>
 
-<?php include 'navbar.php'; ?>
-
 <div class="login-wrapper">
 <div class="container">
 <div class="row justify-content-center">

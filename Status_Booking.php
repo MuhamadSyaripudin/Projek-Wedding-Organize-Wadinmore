@@ -4,7 +4,7 @@ include 'config/database.php';
 
 // Proteksi halaman (khusus user)
 if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
-    header("Location: login_user.php");
+    header("Location: login.php");
     exit;
 }
 
@@ -80,24 +80,27 @@ $query = mysqli_query($conn, "
                   ?>
                 </td>
 
-                <!-- AKSI -->
                 <td>
                   <?php if ($data['status'] === 'Confirmed'): ?>
                     <a href="Pembayaran.php?id=<?= $data['id_booking']; ?>" 
-                       class="btn btn-sm btn-success">
+                      class="btn btn-sm btn-success">
                       💳 Pembayaran
                     </a>
 
-                  <?php elseif ($data['status'] === 'Cancelled'): ?>
-                    <span class="text-muted">Tidak ada aksi</span>
-
                   <?php elseif ($data['status'] === 'Completed'): ?>
-                    <span class="text-muted">Selesai</span>
+                    <a href="Testimoni.php?id=<?= $data['id_booking']; ?>" 
+                      class="btn btn-sm btn-primary">
+                      Isi Testimoni
+                    </a>
+
+                  <?php elseif ($data['status'] === 'Cancelled'): ?>
+                    <span class="text-muted">Dibatalkan</span>
 
                   <?php else: ?>
                     <span class="text-muted">Menunggu konfirmasi</span>
                   <?php endif; ?>
                 </td>
+
               </tr>
               <?php endwhile; ?>
 

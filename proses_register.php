@@ -11,7 +11,7 @@ $password     = $_POST['password'];
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 // Cek username
-$cek = mysqli_query($conn, "SELECT id FROM users WHERE username = '$username'");
+$cek = mysqli_query($conn, "SELECT id_user FROM users WHERE username = '$username'");
 if (mysqli_num_rows($cek) > 0) {
     echo "<script>
             alert('Username sudah digunakan!');

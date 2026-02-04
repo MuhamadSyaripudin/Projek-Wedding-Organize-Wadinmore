@@ -1,14 +1,29 @@
 <?php
 session_start();
+include 'config/database.php';
 
-$nama_user = isset($_SESSION['username']);
-// Placeholder FE sementara untuk Testimoni
-$status_booking = "Pending"; // Pending / Completed
-$testimoni_list = [
-    ['nama_user' => 'Nadia & Rafi', 'pesan' => 'Wadinmore membuat hari pernikahan kami sempurna! Semua berjalan lancar dan dekorasi fantastis.'],
-    ['nama_user' => 'Andi & Sinta', 'pesan' => 'Pelayanan profesional dan ramah. Catering enak, photografer handal.'],
-    ['nama_user' => 'Lina & Budi', 'pesan' => 'Super puas dengan konsep yang sesuai keinginan. Highly recommended!']
-];
+
+// Ambil status booking terakhir user
+$qBooking = mysqli_query($conn, "
+    SELECT status
+    FROM bookings
+    WHERE id_user = '$id_user'
+    ORDER BY created_at DESC
+    LIMIT 1
+");
+
+$booking = mysqli_fetch_assoc($qBooking);
+$status_booking = $booking['status'] ?? 'Pending';
+
+// Ambil testimoni (public)
+$qTestimoni = mysqli_query($conn, "
+    SELECT nama_user, pesan
+    FROM testimoni
+    ORDER BY created_at DESC
+    LIMIT 6
+");
+
+$testimoni_list = mysqli_fetch_all($qTestimoni, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -270,6 +285,7 @@ $testimoni_list = [
             opacity: 1;
             transform: translateY(0);
         }
+
 
         /* ================= GALLERY PREMIUM ================= */
 
@@ -584,12 +600,13 @@ $testimoni_list = [
                   <div class="contact-card">
                     <i class="bi bi-telephone-fill contact-icon"></i>
                     <h6>WhatsApp</h6>
-                    <p>08xxxxxxxxxx</p>
+                    <p>081222393506</p>
                   </div>
                 </div>
 
               </div>
             </div>
+            
           </section>
 
 
@@ -611,6 +628,23 @@ $testimoni_list = [
 
                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
                             </script>
+                            <footer class="footer mt-auto py-3 bg-dark text-light">
+                            <div class="container">
+                                <div class="row align-items-center">
+
+                                <div class="col-md-6 text-center text-md-start">
+                                    <strong>Wadinmore</strong> — Wedding Organizer Profesional
+                                </div>
+
+                                <div class="col-md-6 text-center text-md-end">
+                                    © <?= date('Y'); ?> Wadinmore. All rights reserved.
+                                </div>
+
+                                </div>
+                            </div>
+                            </footer>
+
+                            
 
 </body>
 
