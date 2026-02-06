@@ -18,9 +18,134 @@ $nama_user = $_SESSION['nama_lengkap'];
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <style>
-    body { padding-top: 70px; }
-  </style>
+        <style>
+      /* ================= WADINMORE COLOR SYSTEM ================= */
+      :root {
+        --rose: #b76e79;
+        --gold: #d4af37;
+        --soft: #f8f0f2;
+        --cream: #fffaf7;
+      }
+
+      /* ================= BODY ================= */
+      body {
+        padding-top: 70px;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, var(--cream), var(--soft));
+      }
+
+      /* ================= TITLE ================= */
+      h1 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--rose);
+        text-shadow: 0 3px 10px rgba(183,110,121,.15);
+      }
+
+      /* ================= SUBTEXT ================= */
+      p {
+        color: #666;
+      }
+
+      /* ================= CARD FORM (PREMIUM GLASS) ================= */
+      .card {
+        border: none;
+        border-radius: 24px;
+        background: rgba(255,255,255,.95);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 20px 50px rgba(183,110,121,.15);
+        padding: 10px;
+        transition: .3s;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 30px 65px rgba(183,110,121,.25);
+      }
+
+      /* ================= LABEL ================= */
+      .form-label {
+        font-weight: 600;
+        color: var(--rose);
+      }
+
+      /* ================= INPUT ================= */
+      .form-control,
+      .form-select,
+      textarea {
+        border-radius: 14px;
+        border: 1px solid #eadfe2;
+        padding: 11px 14px;
+        transition: .25s;
+        background: #fff;
+      }
+
+      .form-control:focus,
+      .form-select:focus,
+      textarea:focus {
+        border-color: var(--rose);
+        box-shadow: 0 0 0 4px rgba(183,110,121,.15);
+      }
+
+      /* ================= BUTTON BOOKING (ROSE + GOLD GRADIENT) ================= */
+      .btn-primary {
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        letter-spacing: .5px;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--rose), var(--gold));
+        box-shadow: 0 10px 25px rgba(183,110,121,.35);
+        transition: .3s;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(183,110,121,.55);
+      }
+
+      /* ================= BUTTON STATUS ================= */
+      .btn-success {
+        border-radius: 30px;
+        font-weight: 600;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--gold), var(--rose));
+        border: none;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-3px);
+      }
+
+      /* ================= ALERT ================= */
+      .alert {
+        border-radius: 16px;
+      }
+
+      /* ================= CONTAINER WIDTH ================= */
+      .container {
+        max-width: 900px;
+      }
+
+      /* ================= SMALL LUXURY TOUCH ================= */
+      .card-body {
+        padding: 32px;
+      }
+
+      /* ===== Wedding Button Effect ===== */
+    .btn-wedding {
+      font-size: 16px;
+      transition: .3s;
+    }
+
+    .btn-wedding:hover {
+      transform: translateY(-3px) scale(1.02);
+      letter-spacing: .5px;
+    }
+
+      </style>
+
 </head>
 <body>
 
@@ -119,14 +244,14 @@ $nama_user = $_SESSION['nama_lengkap'];
               <textarea name="catatan" class="form-control" rows="3"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">
-              Kirim Booking
-            </button>
-          </form>
+                      <button type="submit" class="btn btn-primary w-100 btn-wedding">
+            💌 Kirim Booking
+          </button>
 
-          <a href="Status_Booking.php" class="btn btn-success w-100 mt-3">
-            Lihat Status Booking
+          <a href="Status_Booking.php" class="btn btn-success w-100 mt-3 btn-wedding">
+            💍 Lihat Status Booking
           </a>
+
 
         </div>
       </div>

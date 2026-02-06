@@ -49,6 +49,98 @@ $testimoni_list = mysqli_fetch_all($qTestimoni, MYSQLI_ASSOC);
             height: 90vh;
             color: white;
         }
+
+        /* ================= TESTIMONI PREMIUM ================= */
+
+           #testimoni{
+            background: var(--soft)(
+                to bottom,
+                var(--soft),
+                var(--cream)
+            );
+
+            padding-top:120px;
+            padding-bottom:120px;
+            position:relative;
+            }
+
+
+            #testimoni::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:
+                radial-gradient(
+                circle at center,
+                rgba(183,110,121,.18),
+                transparent 65%
+                );
+            pointer-events:none;
+            }
+
+
+
+           .testimonial-card{
+            min-height:240px;          /* bikin lebih panjang */
+            padding:38px 28px;
+
+            background:#ffffffee;
+            border-radius:30px;
+
+            box-shadow:
+                0 25px 60px rgba(183,110,121,.18);
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+
+            transition:.4s;
+            }
+
+
+            .testimonial-card:hover{
+            transform:translateY(-10px);
+            box-shadow:0 35px 75px rgba(183,110,121,.35);
+            background:#fff5f8;
+            }
+
+            /* kutipan teks */
+            .testimonial-text{
+            font-size:15px;
+            line-height:1.8;
+            color:#555;
+            max-width:90%;
+            margin:0 auto;
+            }
+
+            .testimonial-name{
+            margin-top:18px;
+            font-size:14px;
+            }
+
+
+            /* arrow sama seperti gallery */
+            .custom-arrow{
+            width:55px;
+            height:55px;
+            background:linear-gradient(135deg,var(--rose),var(--gold));
+            border-radius:50%;
+            top:50%;
+            transform:translateY(-50%);
+            opacity:.9;
+            }
+
+            .custom-arrow:hover{
+            opacity:1;
+            box-shadow:0 10px 25px rgba(183,110,121,.5);
+            }
+
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon{
+            filter:brightness(0) invert(1);
+            }
+
     </style>
 
     <!-- Bootstrap -->
@@ -197,11 +289,6 @@ $testimoni_list = mysqli_fetch_all($qTestimoni, MYSQLI_ASSOC);
         #gallery {
             background: linear-gradient(to bottom, var(--soft), #fff);
         }
-
-        #testimoni {
-            background: linear-gradient(to bottom, #fff, var(--cream));
-        }
-
         /* ================= SERVICES CARD ================= */
         #services .card {
             border: none;
@@ -546,26 +633,70 @@ $testimoni_list = mysqli_fetch_all($qTestimoni, MYSQLI_ASSOC);
                             </section>
 
 
-                            <!-- TESTIMONI -->
-                            <section id="testimoni" class="py-5 text-center fade-section">
-                                <div class="container">
-                                    <h2 class="section-title">Apa Kata Klien Kami</h2>
+                                <!-- ================= TESTIMONI CAROUSEL ================= -->
+                    <section id="testimoni" class="py-5 fade-section">
 
-                                    <div class="row g-4">
-                                        <?php foreach ($testimoni_list as $t): ?>
-                                            <div class="col-md-4">
-                                                <div class="card h-100 shadow-sm">
-                                                    <div class="card-body">
-                                                        <p><?= $t['pesan']; ?></p>
-                                                        <h6>– <?= $t['nama_user']; ?></h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
+                    <div class="container text-center">
 
-                                </div>
-                            </section>
+                    <h2 class="section-title mb-5">Apa Kata Klien Kami</h2>
+
+                    <div id="testimoniCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500">
+
+                    <div class="carousel-inner">
+
+                    <?php
+                    $chunks = array_chunk($testimoni_list, 3); // 3 card per slide
+                    $first = true;
+
+                    foreach ($chunks as $group):
+                    ?>
+
+                    <div class="carousel-item <?= $first ? 'active' : '' ?>">
+                    <div class="row g-4 justify-content-center">
+
+                        <?php foreach ($group as $t): ?>
+                        <div class="col-md-4">
+
+                        <div class="testimonial-card h-100">
+                            <div class="card-body">
+                            <p class="testimonial-text">
+                                “<?= htmlspecialchars($t['pesan']); ?>”
+                            </p>
+                            <h6 class="testimonial-name">
+                                – <?= htmlspecialchars($t['nama_user']); ?>
+                            </h6>
+                            </div>
+                        </div>
+
+                        </div>
+                        <?php endforeach; ?>
+
+                    </div>
+                    </div>
+
+                    <?php
+                    $first = false;
+                    endforeach;
+                    ?>
+
+                    </div>
+
+
+                    <!-- ARROW NAVIGATION -->
+                    <button class="carousel-control-prev custom-arrow" type="button"
+                    data-bs-target="#testimoniCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    </button>
+
+                    <button class="carousel-control-next custom-arrow" type="button"
+                    data-bs-target="#testimoniCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    </button>
+
+                    </div>
+                    </div>
+                    </section>
+
 
 
                            <!-- CONTACT -->
