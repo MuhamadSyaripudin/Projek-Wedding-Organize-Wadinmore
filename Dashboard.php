@@ -1,14 +1,29 @@
 <?php
 session_start();
+include 'config/database.php';
 
-$nama_user = isset($_SESSION['username']);
-// Placeholder FE sementara untuk Testimoni
-$status_booking = "Pending"; // Pending / Completed
-$testimoni_list = [
-    ['nama_user' => 'Nadia & Rafi', 'pesan' => 'Wadinmore membuat hari pernikahan kami sempurna! Semua berjalan lancar dan dekorasi fantastis.'],
-    ['nama_user' => 'Andi & Sinta', 'pesan' => 'Pelayanan profesional dan ramah. Catering enak, photografer handal.'],
-    ['nama_user' => 'Lina & Budi', 'pesan' => 'Super puas dengan konsep yang sesuai keinginan. Highly recommended!']
-];
+
+// Ambil status booking terakhir user
+$qBooking = mysqli_query($conn, "
+    SELECT status
+    FROM bookings
+    WHERE id_user = '$id_user'
+    ORDER BY created_at DESC
+    LIMIT 1
+");
+
+$booking = mysqli_fetch_assoc($qBooking);
+$status_booking = $booking['status'] ?? 'Pending';
+
+// Ambil testimoni (public)
+$qTestimoni = mysqli_query($conn, "
+    SELECT nama_user, pesan
+    FROM testimoni
+    ORDER BY created_at DESC
+    LIMIT 6
+");
+
+$testimoni_list = mysqli_fetch_all($qTestimoni, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +35,8 @@ $testimoni_list = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -32,6 +49,98 @@ $testimoni_list = [
             height: 90vh;
             color: white;
         }
+
+        /* ================= TESTIMONI PREMIUM ================= */
+
+           #testimoni{
+            background: var(--soft)(
+                to bottom,
+                var(--soft),
+                var(--cream)
+            );
+
+            padding-top:120px;
+            padding-bottom:120px;
+            position:relative;
+            }
+
+
+            #testimoni::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:
+                radial-gradient(
+                circle at center,
+                rgba(183,110,121,.18),
+                transparent 65%
+                );
+            pointer-events:none;
+            }
+
+
+
+           .testimonial-card{
+            min-height:240px;          /* bikin lebih panjang */
+            padding:38px 28px;
+
+            background:#ffffffee;
+            border-radius:30px;
+
+            box-shadow:
+                0 25px 60px rgba(183,110,121,.18);
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+
+            transition:.4s;
+            }
+
+
+            .testimonial-card:hover{
+            transform:translateY(-10px);
+            box-shadow:0 35px 75px rgba(183,110,121,.35);
+            background:#fff5f8;
+            }
+
+            /* kutipan teks */
+            .testimonial-text{
+            font-size:15px;
+            line-height:1.8;
+            color:#555;
+            max-width:90%;
+            margin:0 auto;
+            }
+
+            .testimonial-name{
+            margin-top:18px;
+            font-size:14px;
+            }
+
+
+            /* arrow sama seperti gallery */
+            .custom-arrow{
+            width:55px;
+            height:55px;
+            background:linear-gradient(135deg,var(--rose),var(--gold));
+            border-radius:50%;
+            top:50%;
+            transform:translateY(-50%);
+            opacity:.9;
+            }
+
+            .custom-arrow:hover{
+            opacity:1;
+            box-shadow:0 10px 25px rgba(183,110,121,.5);
+            }
+
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon{
+            filter:brightness(0) invert(1);
+            }
+
     </style>
 
     <!-- Bootstrap -->
@@ -51,6 +160,41 @@ $testimoni_list = [
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
         }
+
+                /* CONTACT STYLE */
+        .contact-section {
+          background: linear-gradient(135deg, #fff7f9, #fdf0f5);
+        }
+
+        .contact-card {
+          background: white;
+          padding: 30px 20px;
+          border-radius: 20px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+          transition: 0.3s;
+        }
+
+        .contact-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .contact-icon {
+          font-size: 35px;
+          color: #d63384; /* pink wedding tone */
+          margin-bottom: 12px;
+        }
+
+        .contact-card h6 {
+          font-weight: 600;
+          margin-bottom: 6px;
+        }
+
+        .section-title {
+          font-weight: 700;
+          letter-spacing: 1px;
+        }
+
 
         /* ===== Wedding Color Palette ===== */
         :root {
@@ -145,11 +289,6 @@ $testimoni_list = [
         #gallery {
             background: linear-gradient(to bottom, var(--soft), #fff);
         }
-
-        #testimoni {
-            background: linear-gradient(to bottom, #fff, var(--cream));
-        }
-
         /* ================= SERVICES CARD ================= */
         #services .card {
             border: none;
@@ -233,6 +372,7 @@ $testimoni_list = [
             opacity: 1;
             transform: translateY(0);
         }
+
 
         /* ================= GALLERY PREMIUM ================= */
 
@@ -493,34 +633,113 @@ $testimoni_list = [
                             </section>
 
 
-                            <!-- TESTIMONI -->
-                            <section id="testimoni" class="py-5 text-center fade-section">
-                                <div class="container">
-                                    <h2 class="section-title">Apa Kata Klien Kami</h2>
+                                <!-- ================= TESTIMONI CAROUSEL ================= -->
+                    <section id="testimoni" class="py-5 fade-section">
 
-                                    <div class="row g-4">
-                                        <?php foreach ($testimoni_list as $t): ?>
-                                            <div class="col-md-4">
-                                                <div class="card h-100 shadow-sm">
-                                                    <div class="card-body">
-                                                        <p><?= $t['pesan']; ?></p>
-                                                        <h6>– <?= $t['nama_user']; ?></h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
+                    <div class="container text-center">
 
-                                </div>
-                            </section>
+                    <h2 class="section-title mb-5">Apa Kata Klien Kami</h2>
+
+                    <div id="testimoniCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500">
+
+                    <div class="carousel-inner">
+
+                    <?php
+                    $chunks = array_chunk($testimoni_list, 3); // 3 card per slide
+                    $first = true;
+
+                    foreach ($chunks as $group):
+                    ?>
+
+                    <div class="carousel-item <?= $first ? 'active' : '' ?>">
+                    <div class="row g-4 justify-content-center">
+
+                        <?php foreach ($group as $t): ?>
+                        <div class="col-md-4">
+
+                        <div class="testimonial-card h-100">
+                            <div class="card-body">
+                            <p class="testimonial-text">
+                                “<?= htmlspecialchars($t['pesan']); ?>”
+                            </p>
+                            <h6 class="testimonial-name">
+                                – <?= htmlspecialchars($t['nama_user']); ?>
+                            </h6>
+                            </div>
+                        </div>
+
+                        </div>
+                        <?php endforeach; ?>
+
+                    </div>
+                    </div>
+
+                    <?php
+                    $first = false;
+                    endforeach;
+                    ?>
+
+                    </div>
 
 
-                            <!-- CONTACT -->
-                            <section id="contact" class="py-5 text-center">
-                                <h2 class="section-title">Contact</h2>
-                                <p>Email: wadinmore@gmail.com</p>
-                                <p>Telp: 08xxxxxxxxxx</p>
-                            </section>
+                    <!-- ARROW NAVIGATION -->
+                    <button class="carousel-control-prev custom-arrow" type="button"
+                    data-bs-target="#testimoniCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    </button>
+
+                    <button class="carousel-control-next custom-arrow" type="button"
+                    data-bs-target="#testimoniCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    </button>
+
+                    </div>
+                    </div>
+                    </section>
+
+
+
+                           <!-- CONTACT -->
+          <section id="contact" class="contact-section py-5">
+            <div class="container text-center">
+
+              <h2 class="section-title mb-4">Contact Us</h2>
+              <p class="text-muted mb-5">Hubungi kami untuk konsultasi dan booking paket terbaik Anda ✨</p>
+
+              <div class="row justify-content-center g-4">
+
+                <!-- Email -->
+                <div class="col-md-3">
+                  <div class="contact-card">
+                    <i class="bi bi-envelope-fill contact-icon"></i>
+                    <h6>Email</h6>
+                    <p>wadinmore@gmail.com</p>
+                  </div>
+                </div>
+
+                <!-- Instagram -->
+                <div class="col-md-3">
+                  <div class="contact-card">
+                    <i class="bi bi-instagram contact-icon"></i>
+                    <h6>Instagram</h6>
+                    <p>@wadinmore</p>
+                  </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="col-md-3">
+                  <div class="contact-card">
+                    <i class="bi bi-telephone-fill contact-icon"></i>
+                    <h6>WhatsApp</h6>
+                    <p>081222393506</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            
+          </section>
+
 
 
                             <!-- Scroll Fade Script -->
@@ -540,6 +759,23 @@ $testimoni_list = [
 
                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
                             </script>
+                            <footer class="footer mt-auto py-3 bg-dark text-light">
+                            <div class="container">
+                                <div class="row align-items-center">
+
+                                <div class="col-md-6 text-center text-md-start">
+                                    <strong>Wadinmore</strong> — Wedding Organizer Profesional
+                                </div>
+
+                                <div class="col-md-6 text-center text-md-end">
+                                    © <?= date('Y'); ?> Wadinmore. All rights reserved.
+                                </div>
+
+                                </div>
+                            </div>
+                            </footer>
+
+                            
 
 </body>
 

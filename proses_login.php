@@ -2,25 +2,24 @@
 session_start();
 include 'config/database.php';
 
-$_SESSION['role'] = 'user';
-header("Location: Dashboard.php");
-
 // Ambil data dari form
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = $_POST['username'] ?? '';
+$password = $_POST['password'] ?? '';
 
 // Ambil data user berdasarkan username
-$query = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+$query = mysqli_query($conn, "SELECT * FROM users WHERE username='$username'");
 
-if (mysqli_num_rows($query) == 1) {
+if (mysqli_num_rows($query) === 1) {
+
     $user = mysqli_fetch_assoc($query);
 
     // Verifikasi password hash
     if (password_verify($password, $user['password'])) {
 
-        // Simpan session
+        // LOGIN BERHASIL → set session
         $_SESSION['login'] = true;
-        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['role'] = 'user';
+        $_SESSION['user_id'] = $user['id_user'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
 
@@ -29,15 +28,15 @@ if (mysqli_num_rows($query) == 1) {
         exit;
 
     } else {
-        echo "<script>
-                alert('Password salah!');
-                window.location='Login.php';
-              </script>";
+        // PASSWORD SALAH
+        $_SESSION['error'] = "Password yang Anda masukkan salah!";
+        header("Location: Login.php");
+        exit;
     }
+
 } else {
-    echo "<script>
-            alert('Username tidak ditemukan!');
-            window.location='Login.php';
-          </script>";
+    // USERNAME TIDAK DITEMUKAN
+    $_SESSION['error'] = "Username tidak ditemukan!";
+    header("Location: Login.php");
+    exit;
 }
-?>

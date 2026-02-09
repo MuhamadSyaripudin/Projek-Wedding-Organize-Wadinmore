@@ -2,30 +2,49 @@
 session_start();
 include 'config/database.php';
 
-// Proteksi
-if (!isset($_SESSION['login'])) {
-    header("Location: Login.php");
+if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
+    header("Location: login.php");
     exit;
 }
 
-// Ambil data dari form (SESUAI FORM)
-$nama_user     = $_POST['nama_user'];
+$id_user       = $_SESSION['user_id'];
+$nama_user     = $_SESSION['nama_lengkap'];
 $nama_paket    = $_POST['nama_paket'];
-$venue_name    = $_POST['venue'] ?? null;
-$alamat_manual = $_POST['alamat_acara'] ?? '';
-$jumlah_tamu = $_POST['jumlah_tamu_auto'] ?? $_POST['jumlah_tamu'] ?? 0;
 $tanggal_acara = $_POST['tanggal_acara'];
-$catatan       = $_POST['catatan'];
+$alamat_acara  = $_POST['alamat_acara'] ?? null;
+$catatan       = $_POST['catatan'] ?? null;
 
-// Ambil user ID dari session
-$id_user = $_SESSION['user_id'];
+/* ===============================
+   FIX JUMLAH TAMU
+================================ */
+if (!empty($_POST['jumlah_tamu_auto'])) {
+    $jumlah_tamu = $_POST['jumlah_tamu_auto'];
+} else {
+    $jumlah_tamu = $_POST['jumlah_tamu'];
+}
 
-$alamat_acara = !empty($venue_name) ? $venue_name : $alamat_manual;
+/* ===============================
+   🔥 VALIDASI TANGGAL BOOKING
+   MAX 2 BOOKING PER TANGGAL
+================================ */
+$cekTanggal = mysqli_query($conn, "
+    SELECT COUNT(*) AS total 
+    FROM bookings 
+    WHERE tanggal_acara = '$tanggal_acara'
+");
+>>>>>>> 4c396e44e48d607f3067e6f7d61a8b0623082a20
 
-// Status default
-$status = 'pending';
+$dataTanggal = mysqli_fetch_assoc($cekTanggal);
 
-// Query simpan booking
+if ($dataTanggal['total'] >= 2) {
+    $_SESSION['error'] = "Tanggal yang Anda pilih sudah penuh. Silakan pilih tanggal lain.";
+    header("Location: Booking.php");
+    exit;
+}
+
+/* ===============================
+   INSERT BOOKING
+================================ */
 $query = mysqli_query($conn, "
     INSERT INTO bookings (
         id_user,
@@ -35,7 +54,8 @@ $query = mysqli_query($conn, "
         jumlah_tamu,
         tanggal_acara,
         catatan,
-        status
+        status,
+        created_at
     ) VALUES (
         '$id_user',
         '$nama_user',
@@ -44,16 +64,17 @@ $query = mysqli_query($conn, "
         '$jumlah_tamu',
         '$tanggal_acara',
         '$catatan',
-        '$status'
+        'Pending',
+        NOW()
     )
 ");
 
-// Cek hasil
 if ($query) {
-    echo "<script>
-        alert('Booking berhasil dikirim!');
-        window.location='Status_Booking.php';
-    </script>";
+    $_SESSION['success'] = "Booking berhasil dibuat. Menunggu konfirmasi admin.";
+    header("Location: Status_booking.php");
+    exit;
 } else {
-    echo "Gagal menyimpan booking: " . mysqli_error($conn);
+    $_SESSION['error'] = "Terjadi kesalahan saat booking.";
+    header("Location: Booking.php");
+    exit;
 }
