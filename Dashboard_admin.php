@@ -26,7 +26,7 @@ $bookings = mysqli_fetch_all($result, MYSQLI_ASSOC);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
-      <style>
+  <style>
     :root{
       --rose:#ec7a98;
       --rose-dark:#d95c7e;
@@ -161,54 +161,49 @@ $bookings = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     /* ================= HALO ADMIN ================= */
-      .admin-greet{
-        color:var(--rose-dark);
-        font-weight:500;
-        letter-spacing:.3px;
-      }
+    .admin-greet{
+      color:var(--rose-dark);
+      font-weight:500;
+      letter-spacing:.3px;
+    }
 
-      .admin-greet strong{
-        color:var(--rose);
-        font-weight:600;
-      }
+    .admin-greet strong{
+      color:var(--rose);
+      font-weight:600;
+    }
 
-      /* ================= HISTORY BUTTON ================= */
-      .btn-history{
-        background:linear-gradient(135deg,#ff9db3,#ffc86b);
-        color:#fff;
-        border-radius:35px;
-        padding:10px 22px;
-        font-weight:600;
-        box-shadow:0 10px 25px rgba(236,122,152,.30);
-        transition:.25s;
-      }
+    /* ================= HISTORY BUTTON ================= */
+    .btn-history{
+      background:linear-gradient(135deg,#ff9db3,#ffc86b);
+      color:#fff;
+      border-radius:35px;
+      padding:10px 22px;
+      font-weight:600;
+      box-shadow:0 10px 25px rgba(236,122,152,.30);
+      transition:.25s;
+    } 
 
-      .btn-history:hover{
-        background:linear-gradient(135deg,var(--rose-dark),var(--gold-strong));
-        transform:translateY(-3px);
-        box-shadow:0 18px 40px rgba(236,122,152,.45);
-      }
-
-
-    </style>
+    .btn-history:hover{
+      background:linear-gradient(135deg,var(--rose-dark),var(--gold-strong));
+      transform:translateY(-3px);
+      box-shadow:0 18px 40px rgba(236,122,152,.45);
+    }    
+  </style>
 
 </head>
 <body>
 
 <div class="container mt-5 pb-5">
-
-
   <h2 class="text-center mb-4">Dashboard Admin</h2>
   <!-- HEADER -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h5 class="admin-greet">
-  👋 Halo <strong><?= $_SESSION['nama_admin']; ?></strong>
+      👋 Halo <strong><?= $_SESSION['nama_admin']; ?></strong>
     </h5>
 
     <a href="history_transaksi.php" class="btn btn-history">
       📋 History Transaksi
     </a>
-
   </div>
 
  <div class="card shadow-sm p-2">
@@ -263,7 +258,7 @@ $bookings = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <!-- AKSI -->
             <td>
               <form action="update_status.php" method="post" class="d-flex gap-1">
-                <input type="hidden" name="nama_user" value="<?= $b['nama_user'] ?>">
+                <input type="hidden" name="id_booking" value="<?= $b['id_booking'] ?>">
                 <select name="status" class="form-select form-select-sm" required>
                   <option value="">Ubah</option>
                   <option value="Pending">Pending</option>

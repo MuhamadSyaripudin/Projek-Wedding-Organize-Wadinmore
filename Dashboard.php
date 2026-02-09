@@ -78,8 +78,6 @@ $testimoni_list = mysqli_fetch_all($qTestimoni, MYSQLI_ASSOC);
             pointer-events:none;
             }
 
-
-
            .testimonial-card{
             min-height:240px;          /* bikin lebih panjang */
             padding:38px 28px;

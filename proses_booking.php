@@ -10,9 +10,17 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'user') {
 $id_user       = $_SESSION['user_id'];
 $nama_user     = $_SESSION['nama_lengkap'];
 $nama_paket    = $_POST['nama_paket'];
+$venue_name    = $_POST['venue'] ?? null;
 $tanggal_acara = $_POST['tanggal_acara'];
 $alamat_acara  = $_POST['alamat_acara'] ?? null;
 $catatan       = $_POST['catatan'] ?? null;
+
+/* ===============================
+   DEFAULT VENUE PAKET500
+================================ */
+if ($nama_paket === "Paket500") {
+    $venue_name = "Desofia Hotel Dago";
+}
 
 /* ===============================
    FIX JUMLAH TAMU
@@ -23,6 +31,8 @@ if (!empty($_POST['jumlah_tamu_auto'])) {
     $jumlah_tamu = $_POST['jumlah_tamu'];
 }
 
+$alamat_acara = !empty($venue_name) ? $venue_name : $alamat_acara;
+
 /* ===============================
    🔥 VALIDASI TANGGAL BOOKING
    MAX 2 BOOKING PER TANGGAL
@@ -32,7 +42,6 @@ $cekTanggal = mysqli_query($conn, "
     FROM bookings 
     WHERE tanggal_acara = '$tanggal_acara'
 ");
->>>>>>> 4c396e44e48d607f3067e6f7d61a8b0623082a20
 
 $dataTanggal = mysqli_fetch_assoc($cekTanggal);
 
